@@ -25,7 +25,8 @@ let
             } > "$out/${name}.toml"
           ''
         )
-        programConfigs;
+         # mypy contains store paths
+         (lib.filterAttrs (n: _: !(lib.hasPrefix "mypy" n)) programConfigs);
     in
     pkgs.runCommand "examples" { } ''
       mkdir $out
